@@ -37,10 +37,10 @@ class RestaurentTile extends StatelessWidget {
                         SizedBox(
                           height: 70.h,
                           width: 70.w,
-                          child: Image.network(
-                            restaurant['imageUrl'],
-                            fit: BoxFit.cover,
-                          ),
+                          // child: Image.network(
+                          //   restaurant['imageUrl'],
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                         Positioned(
                           bottom: 0,

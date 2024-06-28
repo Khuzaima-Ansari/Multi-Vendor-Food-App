@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+APIError apiErrorFromJson(String str) => APIError.fromJson(json.decode(str));
+
 class APIError {
   final bool status;
   final String message;

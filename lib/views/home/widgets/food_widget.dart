@@ -43,10 +43,10 @@ class FoodWidget extends StatelessWidget {
                     child: SizedBox(
                       height: 112.h,
                       width: width * 0.8,
-                      child: Image.network(
-                        image,
-                        fit: BoxFit.fitWidth,
-                      ),
+                      // child: Image.network(
+                      //   image,
+                      //   fit: BoxFit.fitWidth,
+                      // ),
                     ),
                   ),
                 ),

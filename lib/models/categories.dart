@@ -1,10 +1,18 @@
 import 'dart:convert';
 
+List<CategoriesModel> categoriesModelFromJson(String str) =>
+    List<CategoriesModel>.from(
+        json.decode(str).map((x) => CategoriesModel.fromJson(x)));
+
 class CategoriesModel {
   final String id;
   final String title;
   final String value;
   final String imageUrl;
+
+  List<CategoriesModel> categoriesModelFromJson(String str) =>
+      List<CategoriesModel>.from(
+          json.decode(str).map((x) => CategoriesModel.fromJson(x)));
 
   CategoriesModel({
     required this.id,
