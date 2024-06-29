@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+List<FoodsModel> foodsModelFromJson(String str) =>
+    List<FoodsModel>.from(json.decode(str).map((x) => FoodsModel.fromJson(x)));
+
 class FoodsModel {
   final String id;
   final String title;

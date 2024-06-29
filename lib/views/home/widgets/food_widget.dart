@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodly/common/app_style.dart';
 import 'package:foodly/common/reusable_text.dart';
@@ -25,7 +24,7 @@ class FoodWidget extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Padding(
-          padding: EdgeInsets.only(right: 125.w),
+          padding: EdgeInsets.only(right: 12.w),
           child: Container(
             width: width * .75,
             height: 180.h,
@@ -43,10 +42,10 @@ class FoodWidget extends StatelessWidget {
                     child: SizedBox(
                       height: 112.h,
                       width: width * 0.8,
-                      // child: Image.network(
-                      //   image,
-                      //   fit: BoxFit.fitWidth,
-                      // ),
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.fitWidth,
+                      ),
                     ),
                   ),
                 ),
