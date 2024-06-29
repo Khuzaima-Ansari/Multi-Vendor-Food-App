@@ -28,7 +28,7 @@ class RestaurantWidget extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Padding(
-          padding: EdgeInsets.only(right: 125.w),
+          padding: EdgeInsets.only(right: 10.w),
           child: Container(
             width: width * .75,
             height: 192.h,
@@ -48,10 +48,10 @@ class RestaurantWidget extends StatelessWidget {
                         child: SizedBox(
                           height: 112.h,
                           width: width * 0.8,
-                          // child: Image.network(
-                          //   image,
-                          //   fit: BoxFit.fitWidth,
-                          // ),
+                          child: Image.network(
+                            image,
+                            fit: BoxFit.fitWidth,
+                          ),
                         ),
                       ),
                       Positioned(
