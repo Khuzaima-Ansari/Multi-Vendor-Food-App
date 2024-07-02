@@ -1,13 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:foodly/models/foods_model.dart';
-import 'package:foodly/models/hook_models/foods_hook.dart';
+import 'package:foodly/models/hook_models/restaurant_hook.dart';
+import 'package:foodly/models/restaurants_model.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:foodly/constants/constants.dart';
 import 'package:foodly/models/api_error.dart';
 
-FetchFoods useFetchFoods(String code) {
-  final foods = useState<List<FoodsModel>?>(null);
+FetchRestaurant useFetchRestaurant(String code) {
+  final restaurants = useState<RestaurantsModel?>(null);
   final isLoading = useState<bool>(false);
   final error = useState<Exception?>(null);
   final apiError = useState<APIError?>(null);
@@ -16,10 +18,11 @@ FetchFoods useFetchFoods(String code) {
     isLoading.value = true;
 
     try {
-      Uri url = Uri.parse('$appBaseUrl/api/foods/recommendation/$code');
+      Uri url = Uri.parse('$appBaseUrl/api/restaurant/byId/$code');
       final response = await http.get(url);
       if (response.statusCode == 200) {
-        foods.value = foodsModelFromJson(response.body);
+        var restaurant = jsonDecode(response.body);
+        restaurants.value = RestaurantsModel.fromJson(restaurant);
       } else {
         apiError.value = apiErrorFromJson(response.body);
       }
@@ -41,7 +44,6 @@ FetchFoods useFetchFoods(String code) {
   }
 
   useEffect(() {
-    Future.delayed(const Duration(seconds: 3));
     fetchData();
     return null;
   }, []);
@@ -51,8 +53,8 @@ FetchFoods useFetchFoods(String code) {
     fetchData();
   }
 
-  return FetchFoods(
-    data: foods.value,
+  return FetchRestaurant(
+    data: restaurants.value,
     isLoading: isLoading.value,
     error: error.value,
     refetch: refetch,

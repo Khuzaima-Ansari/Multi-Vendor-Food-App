@@ -6,9 +6,10 @@ import 'package:foodly/common/reusable_text.dart';
 import 'package:foodly/constants/constants.dart';
 
 class Heading extends StatelessWidget {
-  const Heading({super.key, required this.text, this.onTap});
+  const Heading({super.key, required this.text, this.onTap, this.more});
   final String text;
   final void Function()? onTap;
+  final bool? more;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +29,16 @@ class Heading extends StatelessWidget {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: onTap,
-            child: Icon(
-              AntDesign.appstore1,
-              color: kSecondary,
-              size: 20.sp,
-            ),
-          )
+          more == null
+              ? GestureDetector(
+                  onTap: onTap,
+                  child: Icon(
+                    AntDesign.appstore1,
+                    color: kSecondary,
+                    size: 20.sp,
+                  ),
+                )
+              : const SizedBox.shrink()
         ],
       ),
     );

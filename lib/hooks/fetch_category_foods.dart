@@ -1,12 +1,17 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:foodly/controllers/category_controller.dart';
 import 'package:foodly/models/foods_model.dart';
 import 'package:foodly/models/hook_models/foods_hook.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:foodly/constants/constants.dart';
 import 'package:foodly/models/api_error.dart';
 
-FetchFoods useFetchFoods(String code) {
+FetchFoods useFetchFoodsByCategory(
+  String code,
+) {
+  final controller = Get.put(CategoryController());
   final foods = useState<List<FoodsModel>?>(null);
   final isLoading = useState<bool>(false);
   final error = useState<Exception?>(null);
@@ -16,7 +21,8 @@ FetchFoods useFetchFoods(String code) {
     isLoading.value = true;
 
     try {
-      Uri url = Uri.parse('$appBaseUrl/api/foods/recommendation/$code');
+      Uri url =
+          Uri.parse('$appBaseUrl/api/foods/${controller.categoryValue}/$code');
       final response = await http.get(url);
       if (response.statusCode == 200) {
         foods.value = foodsModelFromJson(response.body);

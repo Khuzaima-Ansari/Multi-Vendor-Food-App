@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodly/common/app_style.dart';
 import 'package:foodly/common/reusable_text.dart';
 import 'package:foodly/constants/constants.dart';
+import 'package:foodly/controllers/category_controller.dart';
 import 'package:foodly/models/categories.dart';
 import 'package:foodly/views/categories/category_page.dart';
 import 'package:get/get.dart';
@@ -17,8 +18,11 @@ class CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(CategoryController());
     return ListTile(
       onTap: () {
+        controller.updateCategory = category.id;
+        controller.updaTitle = category.title;
         Get.to(
           () => const CategoryPage(),
           transition: Transition.fadeIn,

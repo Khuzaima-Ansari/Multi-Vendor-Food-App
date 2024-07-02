@@ -5,7 +5,6 @@ import 'package:foodly/common/back_ground_container.dart';
 import 'package:foodly/common/reusable_text.dart';
 import 'package:foodly/common/shimmers/foodlist_shimmer.dart';
 import 'package:foodly/constants/constants.dart';
-import 'package:foodly/constants/uidata.dart';
 import 'package:foodly/models/categories.dart';
 import 'package:foodly/views/categories/widgets/category_tile.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
