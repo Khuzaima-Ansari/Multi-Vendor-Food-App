@@ -21,3 +21,11 @@ double hieght = 825.h;
 double width = 375.w;
 
 const String appBaseUrl = "http://10.0.2.2:6013";
+
+const List<String> verificationReasons = [
+  'Real-time updates: Get real-time updates on your order status',
+  'Direct communication: a verified phone number ensures seamless communication',
+  'Enhanced security: Protect your account from unauthorized access',
+  'Effortlessly Rescheduling: Easily address issue with a quick phone call',
+  'Exclusive Offers: Stay in the loop special deals and discounts',
+];
