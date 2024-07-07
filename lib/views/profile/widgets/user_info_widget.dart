@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:foodly/common/app_style.dart';
 import 'package:foodly/constants/constants.dart';
+import 'package:foodly/models/login_response.dart';
 
 class UserInfoWidget extends StatelessWidget {
-  const UserInfoWidget({super.key});
+  const UserInfoWidget({super.key, this.user});
+  final LoginResponse? user;
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +28,9 @@ class UserInfoWidget extends StatelessWidget {
                     SizedBox(
                       height: 35.h,
                       width: 35.w,
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         backgroundColor: kGrayLight,
+                        backgroundImage: NetworkImage(user?.profile ?? ""),
                       ),
                     ),
                     SizedBox(width: 10.w),
@@ -35,11 +38,11 @@ class UserInfoWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "John Doe",
+                          user?.username ?? "Username",
                           style: appStyle(12, kGray, FontWeight.bold),
                         ),
                         Text(
-                          "email@gmail.com",
+                          user?.email ?? "Email",
                           style: appStyle(12, kGrayLight, FontWeight.w600),
                         ),
                       ],
