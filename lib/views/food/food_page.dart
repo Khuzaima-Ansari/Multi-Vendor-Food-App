@@ -345,7 +345,7 @@ class _FoodPageState extends State<FoodPage> {
                     style: appStyle(18, kPrimary, FontWeight.w600),
                   ),
                   SizedBox(
-                    height: 280.h,
+                    height: 290.h,
                     child: Column(
                       children:
                           List.generate(verificationReasons.length, (index) {
@@ -366,7 +366,7 @@ class _FoodPageState extends State<FoodPage> {
                     text: "Verify Phone Number",
                     btnHeight: 40.h,
                     onTap: () {
-                      Get.to(() => PhoneVerificationPage());
+                      Get.to(() => const PhoneVerificationPage());
                     },
                   )
                 ],
