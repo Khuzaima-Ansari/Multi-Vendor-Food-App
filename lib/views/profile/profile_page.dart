@@ -10,6 +10,7 @@ import 'package:foodly/models/login_response.dart';
 import 'package:foodly/views/auth/login_page.dart';
 import 'package:foodly/views/auth/login_redirect.dart';
 import 'package:foodly/views/auth/verification_page.dart';
+import 'package:foodly/views/profile/shipping_address.dart';
 import 'package:foodly/views/profile/widgets/profile_tile_widget.dart';
 import 'package:foodly/views/profile/widgets/user_info_widget.dart';
 import 'package:get/get.dart';
@@ -25,9 +26,11 @@ class ProfilePage extends StatelessWidget {
     final box = GetStorage();
     String? token = box.read("token");
     if (token != null) {
+      print(token);
       user = controller.getUserInfo();
     }
     if (token == null) {
+      print("Token is null");
       return const LoginRedirect();
     }
     if (user != null && user.verification == false) {
@@ -92,7 +95,15 @@ class ProfilePage extends StatelessWidget {
                     ProfileTileWidget(
                       title: "Shipping Address",
                       icon: SimpleLineIcons.location_pin,
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(
+                          () => const ShippingAddress(),
+                          transition: Transition.rightToLeft,
+                          duration: const Duration(
+                            milliseconds: 900,
+                          ),
+                        );
+                      },
                     ),
                     ProfileTileWidget(
                       title: "Service Center",

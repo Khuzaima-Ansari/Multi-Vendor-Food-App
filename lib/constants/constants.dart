@@ -29,3 +29,5 @@ const List<String> verificationReasons = [
   'Effortlessly Rescheduling: Easily address issue with a quick phone call',
   'Exclusive Offers: Stay in the loop special deals and discounts',
 ];
+
+const GOOGLE_API_KEY = "AIzaSyBd4E7v_H4fvkEIQzw9Soh8JsdDPRzojj0";
