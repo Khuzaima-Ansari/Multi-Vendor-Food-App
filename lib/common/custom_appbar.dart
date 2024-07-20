@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foodly/common/app_style.dart';
 import 'package:foodly/common/reusable_text.dart';
 import 'package:foodly/constants/constants.dart';
 import 'package:foodly/controllers/user_location_controller.dart';
+import 'package:foodly/hooks/fetch_default_address.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class CustomAppBar extends StatefulWidget {
+class CustomAppBar extends StatefulHookWidget {
   const CustomAppBar({super.key});
 
   @override
@@ -25,6 +27,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(UserLocationController());
+    final hookResult = useFetchDefault();
+    final address = hookResult.data;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       height: 110.h,
@@ -57,9 +61,11 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         () => SizedBox(
                           width: width * 0.65,
                           child: Text(
-                            controller.address == ""
-                                ? "cm;sm ;lcs;lmcs;mcmcsc scs"
-                                : controller.address,
+                            hookResult.data != null
+                                ? hookResult.data!
+                                : controller.address == ""
+                                    ? "adnoa nd naod nnand pad"
+                                    : controller.address,
                             overflow: TextOverflow.ellipsis,
                             style: appStyle(13, kDark, FontWeight.normal),
                           ),

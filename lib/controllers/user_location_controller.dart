@@ -1,7 +1,13 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:foodly/constants/constants.dart';
+import 'package:foodly/views/entrypoint.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class UserLocationController extends GetxController {
   final RxBool _isDefault = false.obs;
@@ -48,5 +54,43 @@ class UserLocationController extends GetxController {
     } catch (e) {
       print('Failed to get address: $e');
     }
+  }
+
+  void addAddress(String data) async {
+    final box = GetStorage();
+    String accessToken = box.read("token");
+
+    Uri url = Uri.parse('$appBaseUrl/api/address');
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+
+    try {
+      var response = await http.post(url, headers: headers, body: data);
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          "Your address has been added",
+          "Enjoy your awesome experience",
+          colorText: kLightWhite,
+          backgroundColor: kPrimary,
+          icon: const Icon(
+            Ionicons.fast_food_outline,
+          ),
+        );
+        Get.offAll(() => MainScreen());
+      } else {
+        Get.snackbar(
+          "Failed to add address",
+          "Please try again",
+          colorText: kLightWhite,
+          backgroundColor: kPrimary,
+          icon: const Icon(
+            Ionicons.fast_food_outline,
+          ),
+        );
+      }
+    } catch (e) {}
   }
 }

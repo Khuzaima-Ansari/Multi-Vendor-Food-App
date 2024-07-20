@@ -10,7 +10,7 @@ import 'package:foodly/models/login_response.dart';
 import 'package:foodly/views/auth/login_page.dart';
 import 'package:foodly/views/auth/login_redirect.dart';
 import 'package:foodly/views/auth/verification_page.dart';
-import 'package:foodly/views/profile/shipping_address.dart';
+import 'package:foodly/views/profile/addresses_page.dart';
 import 'package:foodly/views/profile/widgets/profile_tile_widget.dart';
 import 'package:foodly/views/profile/widgets/user_info_widget.dart';
 import 'package:get/get.dart';
@@ -97,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                       icon: SimpleLineIcons.location_pin,
                       onTap: () {
                         Get.to(
-                          () => const ShippingAddress(),
+                          () => const Addresses(),
                           transition: Transition.rightToLeft,
                           duration: const Duration(
                             milliseconds: 900,

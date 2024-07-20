@@ -277,7 +277,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
                       SizedBox(height: 15.h),
                       EmailTextField(
                         controller: _instruction,
-                        hintText: 'Celivery Instructions',
+                        hintText: 'Delivery Instructions',
                         prefixIcon: const Icon(Ionicons.location_sharp),
                         keyboardType: TextInputType.number,
                       ),
@@ -322,6 +322,7 @@ class _ShippingAddressState extends State<ShippingAddress> {
                             );
 
                             String data = addressModelToJson(model);
+                            userController.addAddress(data);
                           }
                         },
                       ),
