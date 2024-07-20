@@ -6,24 +6,22 @@ import 'package:foodly/common/app_style.dart';
 import 'package:foodly/common/reusable_text.dart';
 import 'package:foodly/constants/constants.dart';
 import 'package:foodly/controllers/cart_controller.dart';
-import 'package:foodly/models/cart_request.dart';
-import 'package:foodly/models/foods_model.dart';
-import 'package:foodly/views/food/food_page.dart';
+import 'package:foodly/controllers/login_controller.dart';
+import 'package:foodly/models/cart_response.dart';
 import 'package:get/get.dart';
 
-class FoodTile extends StatelessWidget {
-  const FoodTile({super.key, required this.food, this.color});
+class CartTile extends StatelessWidget {
+  const CartTile({super.key, required this.cart, this.color, this.refetch});
 
-  final FoodsModel food;
+  final CartResponse cart;
   final Color? color;
+  final Function()? refetch;
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CartController());
     return GestureDetector(
-      onTap: () {
-        Get.to(() => FoodPage(food: food));
-      },
+      onTap: () {},
       child: Stack(
         clipBehavior: Clip.hardEdge,
         children: [
@@ -48,7 +46,7 @@ class FoodTile extends StatelessWidget {
                           height: 70.h,
                           width: 70.w,
                           child: Image.network(
-                            food.imageUrl[0],
+                            cart.productId.imageUrl[0],
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -81,21 +79,21 @@ class FoodTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ReusableText(
-                        text: food.title,
+                        text: cart.productId.title,
                         style: appStyle(11, kDark, FontWeight.w400),
                       ),
-                      ReusableText(
-                        text: "Delivery time: ${food.time}",
-                        style: appStyle(11, kGray, FontWeight.w400),
-                      ),
+                      // ReusableText(
+                      //   text: "Delivery time: ${food.time}",
+                      //   style: appStyle(11, kGray, FontWeight.w400),
+                      // ),
                       SizedBox(
                         width: width * 0.7,
                         height: 15.h,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: food.additives.length,
+                            itemCount: cart.additives.length,
                             itemBuilder: (context, i) {
-                              var additive = food.additives[i];
+                              var additive = cart.additives[i];
                               return Container(
                                 margin: EdgeInsets.only(right: 5.w),
                                 decoration: BoxDecoration(
@@ -106,7 +104,7 @@ class FoodTile extends StatelessWidget {
                                   child: Padding(
                                     padding: EdgeInsets.all(2.w),
                                     child: ReusableText(
-                                      text: additive.title,
+                                      text: additive,
                                       style:
                                           appStyle(8, kGray, FontWeight.w500),
                                     ),
@@ -133,7 +131,7 @@ class FoodTile extends StatelessWidget {
               ),
               child: Center(
                 child: ReusableText(
-                  text: "\$ ${food.price.toStringAsFixed(2)}",
+                  text: "\$ ${cart.totalPrice.toStringAsFixed(2)}",
                   style: appStyle(12, kLightWhite, FontWeight.bold),
                 ),
               ),
@@ -144,14 +142,7 @@ class FoodTile extends StatelessWidget {
             top: 6.h,
             child: GestureDetector(
               onTap: () {
-                var data = CartRequest(
-                  productId: food.id,
-                  additives: [],
-                  quantity: 1,
-                  totalPrice: food.price,
-                );
-                String cart = cartRequestToJson(data);
-                controller.addToCart(cart);
+                controller.removeToCart(cart.id, refetch!);
               },
               child: Container(
                 width: 19.w,
@@ -162,9 +153,9 @@ class FoodTile extends StatelessWidget {
                 ),
                 child: Center(
                     child: Icon(
-                  MaterialCommunityIcons.cart_plus,
+                  MaterialCommunityIcons.trash_can,
                   size: 15.h,
-                  color: kWhite,
+                  color: kRed,
                 )),
               ),
             ),

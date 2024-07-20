@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:foodly/controllers/cart_controller.dart';
 import 'package:foodly/controllers/login_controller.dart';
+import 'package:foodly/models/cart_request.dart';
 import 'package:foodly/models/login_response.dart';
 import 'package:foodly/views/auth/login_page.dart';
 import 'package:get/get.dart';
@@ -35,6 +37,7 @@ class _FoodPageState extends State<FoodPage> {
     LoginResponse? user;
     final hookResult = useFetchRestaurant(widget.food.restaurent);
     final controller = Get.put(FoodsController());
+    final cartController = Get.put(CartController());
     final loginController = Get.put(LoginController());
     user = loginController.getUserInfo();
     controller.loadAdditive(widget.food.additives);
@@ -221,6 +224,7 @@ class _FoodPageState extends State<FoodPage> {
                         onChanged: (bool? value) {
                           additive.toggleChecked();
                           controller.getTotalPrice();
+                          controller.getCartAdditive();
                         },
                       );
                     }),
@@ -305,7 +309,20 @@ class _FoodPageState extends State<FoodPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          double price =
+                              (widget.food.price + controller.totalPrice) *
+                                  controller.count.value;
+
+                          var data = CartRequest(
+                            productId: widget.food.id,
+                            additives: controller.getCartAdditive(),
+                            quantity: controller.count.value,
+                            totalPrice: price,
+                          );
+                          String cart = cartRequestToJson(data);
+                          cartController.addToCart(cart);
+                        },
                         child: CircleAvatar(
                           backgroundColor: kSecondary,
                           radius: 20.r,

@@ -42,6 +42,19 @@ class FoodsController extends GetxController {
     }
   }
 
+  List<String> getCartAdditive() {
+    List<String> cartAdditives = [];
+    for (var additive in additivesList) {
+      if (additive.isChecked.value && !cartAdditives.contains(additive.title)) {
+        cartAdditives.add(additive.title);
+      } else if (cartAdditives.contains(additive.title) &&
+          !additive.isChecked.value) {
+        cartAdditives.remove(additive.title);
+      }
+    }
+    return cartAdditives;
+  }
+
   final RxDouble _totalPrice = 0.0.obs;
   double get totalPrice => _totalPrice.value;
   set setTotalPrice(double totalPrice) {
