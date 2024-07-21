@@ -7,7 +7,10 @@ import 'package:foodly/controllers/cart_controller.dart';
 import 'package:foodly/controllers/login_controller.dart';
 import 'package:foodly/models/cart_request.dart';
 import 'package:foodly/models/login_response.dart';
+import 'package:foodly/models/order_model.dart';
+import 'package:foodly/models/restaurants_model.dart';
 import 'package:foodly/views/auth/login_page.dart';
+import 'package:foodly/views/orders/order_page.dart';
 import 'package:get/get.dart';
 
 import 'package:foodly/common/app_style.dart';
@@ -36,6 +39,7 @@ class _FoodPageState extends State<FoodPage> {
   Widget build(BuildContext context) {
     LoginResponse? user;
     final hookResult = useFetchRestaurant(widget.food.restaurent);
+    RestaurantsModel? restaurant = hookResult.data;
     final controller = Get.put(FoodsController());
     final cartController = Get.put(CartController());
     final loginController = Get.put(LoginController());
@@ -297,7 +301,30 @@ class _FoodPageState extends State<FoodPage> {
                           } else if (user.phoneVerification == false) {
                             showVerificationSheet(context);
                           } else {
-                            print("PLACE ORDER");
+                            double price =
+                                (widget.food.price + controller.totalPrice) *
+                                    controller.count.value;
+
+                            // Create OrderItem
+                            OrderItem item = OrderItem(
+                              foodId: widget.food.id,
+                              quantity: controller.count.value,
+                              price: price,
+                              additives: controller.getCartAdditive(),
+                              instructions: _preference.text,
+                            );
+
+                            Get.to(
+                              () => OrderPage(
+                                restaurant: restaurant,
+                                food: widget.food,
+                                item: item,
+                              ),
+                              transition: Transition.cupertino,
+                              duration: const Duration(
+                                milliseconds: 900,
+                              ),
+                            );
                           }
                         },
                         child: Padding(
